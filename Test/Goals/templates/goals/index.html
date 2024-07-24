@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'wallpaper/arrow.png' %}"); /* Background image */
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #e0e0e0; /* Grey box background */
+            padding: 30px; /* Adjusted padding */
+            border-radius: 10px;
+            width: 60%; /* Width of the box */
+            max-width: 500px; /* Maximum width */
+            margin-top: 50px; /* Space for the content above */
+            margin-bottom: 70px; /* Space between container and footer */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #000; /* Black heading */
+            margin-bottom: 20px; /* Space between heading and logo */
+        }
+
+        .logo {
+            margin: 20px 0; /* Margin for spacing around the logo */
+            width: 150px; /* Adjusted width for the logo */
+            height: auto; /* Maintain aspect ratio */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+
+        a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007bff; /* Blue background for links */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        footer {
+            background-color: #000000; /* Black background */
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: white; /* Default link color in footer */
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        footer a.contact-link {
+            color: white; /* White font color for contact link */
+            background-color: black; /* Black background for contact link */
+            padding: 10px 20px; /* Adjust padding to match other links */
+            border-radius: 5px; /* Rounded corners for consistency */
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Goalie</h1>
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo"> <!-- Logo image -->
+        <div class="links">
+            <a href="{% url 'Goals:create_goal' %}">Create Goal</a>
+            <a href="{% url 'Goals:goal_list' %}">Goal List</a>
+            <a href="{% url 'Users:login' %}">Login</a>
+            <a href="{% url 'Users:register' %}">Register</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Goalie. All rights reserved.</p>
+        <a href="{% url 'Users:contact' %}" class="contact-link">Contact</a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Contributions</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("{% static 'contribute/background.png' %}"); /* Background image */
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+        }
+        .top-bar {
+            background-color: #000000; /* Black background for the top bar */
+            color: white;
+            padding: 15px 20px; /* Adjusted padding for more space */
+            text-align: center;
+            display: flex; /* Use flexbox for alignment */
+            justify-content: center; /* Center the links */
+            gap: 20px; /* Space between links */
+        }
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold; /* Bold text for better visibility */
+            padding: 0 10px; /* Padding around the links */
+        }
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            text-align: center;
+            background-color: #ffffff; /* White background for better contrast */
+            padding: 40px; /* Increased padding */
+            border-radius: 10px;
+            width: 60%;
+            max-width: 700px; /* Wider container */
+            margin: 50px auto; /* Center the container */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for a modern look */
+        }
+        .progress-container {
+            background-color: #f3f3f3; /* Light grey background for the progress container */
+            border-radius: 25px;
+            overflow: hidden;
+            width: 100%; /* Full width of the container */
+            margin: 20px 0; /* Margin for spacing */
+        }
+        .progress-bar {
+            background-color: #4caf50; /* Green background for the progress bar */
+            height: 30px; /* Height of the progress bar */
+            text-align: center;
+            color: white;
+            line-height: 30px; /* Center the text vertically */
+            width: 0%; /* Initial width of the progress bar */
+            position: relative;
+        }
+        .progress-bar span {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            text-align: center;
+            color: black; /* Black text color for better visibility on green background */
+        }
+        footer {
+            background-color: #000000; /* Black background for footer */
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        footer p {
+            margin: 0;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'Goals:goal_list' %}">Goal List</a>
+        <a href="{% url 'Users:contact' %}">Contact</a>
+    </div>
+
+    <div class="container">
+        <h1>Contributions for {{ goal.title }}</h1>
+
+        <div class="progress-container">
+            <div class="progress-bar" style="width: {{ progress_percentage }}%;">
+                <span>{{ progress_percentage|floatformat:2 }}%</span>
+            </div>
+        </div>
+
+        <ul style="list-style: none; padding: 0;">
+            {% for contribution in contributions %}
+                <li style="background-color: #f9f9f9; padding: 10px; border-bottom: 1px solid #ddd; margin-bottom: 5px;">
+                    {{ contribution.amount }} - {{ contribution.date }}
+                </li>
+            {% empty %}
+                <li style="background-color: #f9f9f9; padding: 10px; border-bottom: 1px solid #ddd; margin-bottom: 5px;">
+                    No contributions yet.
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Goalie. All rights reserved.</p>
+        <a href="{% url 'Users:contact' %}" class="contact-link">Contact</a>
+    </footer>
+</body>
+</html>

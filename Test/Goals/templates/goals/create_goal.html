@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Goal</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'wallpaper/arrow.png' %}"); /* Background image */
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .top-bar {
+            background-color: #000000; /* Black background */
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 0 15px;
+        }
+
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: #ffffff; /* White background for the form container */
+            padding: 20px; /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px; /* Reduced maximum width */
+            margin-top: 80px; /* Space for the top bar */
+            text-align: center;
+            margin-bottom: 50px; /* Space between container and footer */
+        }
+
+        h2 {
+            color: #000; /* Black heading */
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 80px; /* Make the image smaller */
+            height: auto; /* Maintain aspect ratio */
+            margin: 10px 0; /* Margin for spacing */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        button {
+            background-color: #007bff; /* Blue background */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        footer {
+            background-color: #000000; /* Black background */
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'Users:login' %}">Login</a>
+        <a href="{% url 'Users:register' %}">Register</a>
+        <a href="{% url 'Goals:create_goal' %}">Create Goal</a>
+        <a href="{% url 'Goals:goal_list' %}">Goal List</a>
+    </div>
+
+    <div class="container">
+        <h2>Create a New Goal</h2>
+        <img src="{% static 'create/create.png' %}" alt="Create Goal Image"> <!-- Your image -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Goal</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Goalie. All rights reserved.</p>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'Users:contact' %}">Contact</a>
+    </footer>
+</body>
+</html>

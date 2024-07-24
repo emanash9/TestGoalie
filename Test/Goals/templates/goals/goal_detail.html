@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Goal Detail</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'wallpaper/arrow.png' %}"); /* Background image */
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+            color: #343a40; /* Dark grey text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .top-bar {
+            background-color: #000000; /* Black background */
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            background-color: #ffffff; /* White background for the list container */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            margin-top: 80px; /* Space for the top bar */
+            text-align: center;
+        }
+        h1 {
+            color: #000; /* Black heading */
+            margin-bottom: 20px;
+        }
+        .goal-details {
+            text-align: left;
+            margin: 0 auto;
+        }
+        .goal-details dt {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .goal-details dd {
+            margin: 0 0 15px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #28a745; /* Green background */
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff; /* Blue link color */
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'Users:login' %}">Login</a>
+        <a href="{% url 'Users:register' %}">Register</a>
+        <a href="{% url 'Goals:create_goal' %}">Create Goal</a>
+        <a href="{% url 'Goals:goal_list' %}">Goal List</a>
+    </div>
+
+    <div class="container">
+        <h1>{{ goal.title }}</h1>
+        <dl class="goal-details">
+            <dt>Description:</dt>
+            <dd>{{ goal.description }}</dd>
+            <dt>Date:</dt>
+            <dd>{{ goal.date }}</dd>
+            <dt>Target Amount:</dt>
+            <dd>{{ goal.target_amount }}</dd>
+            <dt>Deadline:</dt>
+            <dd>{{ goal.deadline }}</dd>
+        </dl>
+        <a href="{% url 'Goals:goal_list' %}" class="button">Back to Goal List</a>
+        <a href="{% url 'Goals:add_contribution' goal.id %}" class="button">Add Contribution</a>
+        <a href="{% url 'Goals:view_contributions' goal.id %}" class="button">View Contributions</a>
+    </div>
+</body>
+</html>

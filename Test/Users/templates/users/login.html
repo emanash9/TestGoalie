@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'wallpaper/arrow.png' %}"); /* Background image */
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+            color: #343a40; /* Dark grey text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff; /* White background for the form container */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px; /* Maximum width for the container */
+            text-align: center;
+            margin-bottom: 70px; /* Space for footer */
+        }
+        h1 {
+            color: #000; /* Black heading */
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+            margin-top: 20px; /* Space above buttons */
+        }
+        button, .back-home {
+            background-color: #007bff; /* Blue background */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+        button:hover, .back-home:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .back-home {
+            background-color: #007bff; /* Same blue background for consistency */
+        }
+        .back-home:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        footer {
+            background-color: #000000; /* Black background */
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        footer p {
+            margin: 0;
+        }
+        footer a {
+            color: white; /* Default link color in footer */
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        footer a.contact-link {
+            color: white; /* White font color for contact link */
+            background-color: black; /* Black background for contact link */
+            padding: 10px 20px; /* Adjust padding to match other links */
+            border-radius: 5px; /* Rounded corners for consistency */
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="button-container">
+                <button type="submit">Login</button>
+                <a href="{% url 'index' %}" class="back-home">Back to Home</a>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Goalie. All rights reserved.</p>
+        <a href="{% url 'Users:contact' %}" class="contact-link">Contact</a>
+    </footer>
+</body>
+</html>

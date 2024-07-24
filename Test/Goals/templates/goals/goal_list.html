@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Goal List</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'wallpaper/arrow.png' %}"); /* Background image */
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+            color: #343a40; /* Dark grey text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .top-bar {
+            background-color: #000000; /* Black background */
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            background-color: #ffffff; /* White background for the list container */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px; /* Maximum width for the container */
+            margin-top: 80px; /* Space for the top bar */
+            text-align: center;
+        }
+        h1 {
+            color: #000; /* Black heading */
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ced4da;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff; /* Blue color for links */
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .btn-edit, .btn-delete {
+            background-color: #007bff; /* Blue color for edit button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            margin-left: 5px;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .btn-delete {
+            background-color: #f44336; /* Red color for delete button */
+        }
+        .btn-delete:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+        }
+        .create-link {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff; /* Blue color for create new goal link */
+        }
+        .create-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #000000; /* Black background */
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px; /* Space between items */
+        }
+        footer p {
+            margin: 0;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'Users:login' %}">Login</a>
+        <a href="{% url 'Users:register' %}">Register</a>
+        <a href="{% url 'Goals:create_goal' %}">Create Goal</a>
+        <a href="{% url 'Goals:goal_list' %}">Goal List</a>
+    </div>
+
+    <div class="container">
+        <h1>Goal List</h1>
+        <ul>
+            {% for goal in goals %}
+            <li>
+                <a href="{% url 'Goals:goal_detail' goal.id %}">{{ goal.title }}</a> <!-- Link to goal detail -->
+                <div>
+                    <a href="{% url 'Goals:edit_goal' goal.id %}" class="btn-edit">Edit</a>
+                    <form method="post" action="{% url 'Goals:delete_goal' goal.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-delete">Delete</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'Goals:create_goal' %}" class="create-link">Create New Goal</a>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tip</h2>
+            <p>Click on the goal to see description</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Goalie. All rights reserved.</p>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'Users:contact' %}">Contact</a>
+
+    </footer>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user loads the page, open the modal
+        window.onload = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

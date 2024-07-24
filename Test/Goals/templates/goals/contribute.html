@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contributions for {{ goal.title }}</title>
+</head>
+<body>
+    <h1>Contributions for {{ goal.title }}</h1>
+    <ul>
+        {% for contribution in contributions %}
+        <li>{{ contribution.amount }} - {{ contribution.date }}</li>
+        {% empty %}
+        <li>No contributions yet.</li>
+        {% endfor %}
+    </ul>
+    <!-- Link to add a contribution -->
+<!-- Test/Goals/templates/goals/contribute.html -->
+        <a href="{% url 'add_contribution' goal.id %}">Add Contribution</a>
+</body>
+</html>
